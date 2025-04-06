@@ -4,10 +4,16 @@ const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const gradeRoute = require('./routes/grade');
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:3000', // or "*" for dev
+  }));
+
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {

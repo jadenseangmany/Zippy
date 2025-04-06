@@ -1,41 +1,73 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function HW1ProblemsPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0); // 0, 1 = problems, 2 = complete
   const [submitted, setSubmitted] = useState(false);
+  const [answer, setAnswer] = useState(""); // capture answer input
+  const [evaluation, setEvaluation] = useState(""); // Gemini evaluation text
 
   const problems = [
     {
       question:
-        'A hockey puck is sliding across a very smooth, frictionless ice rink at a constant velocity of 5 m/s to the east. What is the net force acting on the puck? Upload your written steps.',
+        "A hockey puck is sliding across a very smooth, frictionless ice rink at a constant velocity of 5 m/s to the east. What is the net force acting on the puck? Upload your written steps.",
       number: 1,
     },
     {
       question:
-        'A 2kg object is pushed with a force of 10N. What is its acceleration? Show your work.',
+        "A 2kg object is pushed with a force of 10N. What is its acceleration? Show your work.",
       number: 2,
     },
   ];
 
   const isFinalStep = currentStep === problems.length;
-
   // 🧠 Calculate progress: 0%, 50%, 100%
-  const progress =
-    currentStep === 0 ? 0 : currentStep === 1 ? 50 : 100;
+  const progress = currentStep === 0 ? 0 : currentStep === 1 ? 50 : 100;
 
   const handleNext = () => {
     setSubmitted(false);
+    setAnswer(""); // clear answer when moving to next problem
+    setEvaluation("");
     setCurrentStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
     if (currentStep > 0) {
       setSubmitted(false);
+      setAnswer("");
+      setEvaluation("");
       setCurrentStep((prev) => prev - 1);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!submitted) {
+      try {
+        // POST to your backend Gemini API endpoint
+        const response = await fetch("http://localhost:3001/api/grade", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            questionText: problems[currentStep].question,
+            answerText: answer,
+            studentId: "test123", // or your dynamic student id
+          }),
+        });
+        const data = await response.json();
+        console.log("Evaluation:", data.evaluation);
+        setEvaluation(data.evaluation);
+      } catch (err) {
+        console.error("Error fetching Gemini evaluation:", err);
+        setEvaluation("Error fetching evaluation.");
+      }
+      setSubmitted(true);
+    } else {
+      handleNext();
     }
   };
 
@@ -43,7 +75,7 @@ export default function HW1ProblemsPage() {
     <div className="min-h-screen bg-white p-6">
       {/* 🔙 Back to Assignment */}
       <button
-        onClick={() => router.push('/assignments/physics/hw1')}
+        onClick={() => router.push("/assignments/physics/hw1")}
         className="text-blue-500 hover:underline mb-4 text-sm"
       >
         ← Back to Assignment
@@ -51,7 +83,7 @@ export default function HW1ProblemsPage() {
 
       <h2 className="text-2xl font-bold mb-2 text-black">AP Physics HW #1</h2>
       <p className="text-black mb-1">
-        {isFinalStep ? 'Assignment Complete!' : `Your Progress - ${progress}%`}
+        {isFinalStep ? "Assignment Complete!" : `Your Progress - ${progress}%`}
       </p>
       <div className="h-2 w-full bg-red-200 rounded-full mb-6 overflow-hidden">
         <div
@@ -73,8 +105,15 @@ export default function HW1ProblemsPage() {
           <input
             className="w-full border border-red-300 bg-red-200 text-black p-3 rounded-md mb-4"
             placeholder="Type Answer Here"
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
           />
-          {submitted && <p className="text-green-600 mb-2">+10 Points</p>}
+
+          {evaluation && (
+            <div className="bg-green-100 p-2 mb-4 rounded-md">
+              <p className="text-green-800 text-sm">{evaluation}</p>
+            </div>
+          )}
 
           {/* Controls */}
           <div className="flex gap-4 mt-4">
@@ -91,19 +130,13 @@ export default function HW1ProblemsPage() {
             </button>
             <button
               className="bg-[#c97469] text-white px-6 py-2 rounded-md font-semibold"
-              onClick={() => {
-                if (!submitted) {
-                  setSubmitted(true);
-                } else {
-                  handleNext();
-                }
-              }}
+              onClick={handleSubmit}
             >
               {submitted
                 ? currentStep === problems.length - 1
-                  ? 'Finish'
-                  : 'Next'
-                : 'Submit'}
+                  ? "Finish"
+                  : "Next"
+                : "Submit"}
             </button>
           </div>
         </>
@@ -113,7 +146,7 @@ export default function HW1ProblemsPage() {
           <div className="bg-[#d4e3ed] rounded-lg p-6 text-black">
             <p className="font-semibold text-lg mb-2">Great Work!</p>
             <p>
-              You earned <strong>42 points</strong> and{' '}
+              You earned <strong>42 points</strong> and{" "}
               <strong>5 bonus points</strong>.
             </p>
             <p>
@@ -123,7 +156,7 @@ export default function HW1ProblemsPage() {
             <div className="mt-4 flex gap-4">
               <button
                 className="bg-[#d87B74] text-white px-6 py-2 rounded-md font-semibold"
-                onClick={() => router.push('/assignments/physics/hw1')}
+                onClick={() => router.push("/assignments/physics/hw1")}
               >
                 AP Physics 1
               </button>
@@ -152,9 +185,9 @@ export default function HW1ProblemsPage() {
             </div>
 
             {[
-              { name: 'Lina G.', score: 50, rank: 1 },
-              { name: 'Jane D.', score: 49, rank: 2 },
-              { name: 'You', score: 47, rank: 3 },
+              { name: "Lina G.", score: 50, rank: 1 },
+              { name: "Jane D.", score: 49, rank: 2 },
+              { name: "You", score: 47, rank: 3 },
             ].map((entry) => (
               <div
                 key={`${entry.name}-${entry.rank}`}
