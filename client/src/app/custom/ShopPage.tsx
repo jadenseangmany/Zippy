@@ -8,6 +8,7 @@ import { useState } from "react";
 import ShopItemDetail from './ShopItemPage';
 
 
+
 const items = [
     {
       id: 1,
@@ -83,7 +84,7 @@ const items = [
       },
   ];
 
-  export default function ShopPage({ onClose }: { onClose?: () => void }) {
+  export default function ShopPage({ onClose, onOpenGacha }: { onClose?: () => void; onOpenGacha?: () => void }) {
     const [filter, setFilter] = useState<"all" | "academic" | "cosmetic">("all");
     const [selectedItem, setSelectedItem] = useState<typeof items[0] | null>(null);
     const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
@@ -119,12 +120,12 @@ const items = [
 
             {/* Center: Gift Button */}
             <button
-                onClick={() => console.log("Go to Gacha!")} // replace with your nav handler
-                className="flex items-center space-x-2 px-4 py-2 bg-[#B7CEDE] hover:bg-[#A5BFCF] text-black font-semibold rounded-xl transition"
-            >
-                <Gift className="w-5 h-5" />
-                <span>Summon a Pet!</span>
-            </button>
+  onClick={onOpenGacha}
+  className="flex items-center space-x-2 px-4 py-2 bg-[#B7CEDE] hover:bg-[#A5BFCF] text-black font-semibold rounded-xl transition"
+>
+  <Gift className="w-5 h-5" />
+  <span>Summon a Pet!</span>
+</button>
 
             {/* Right: Dropdown */}
             <select
