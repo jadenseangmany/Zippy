@@ -2,8 +2,10 @@
 
 import Sidebar from "../../../custom/Sidebar";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function HW1BioPage() {
+  const router = useRouter();
   return (
     <div className="flex h-screen bg-[#e2ecf4]">
       {/* Sidebar */}
@@ -13,7 +15,10 @@ export default function HW1BioPage() {
       <div className="flex-1 p-6 overflow-auto">
         <div className="bg-white rounded-xl shadow-md p-6 h-full relative">
           {/* Close Button */}
-          <button className="absolute top-4 right-6 text-2xl text-black hover:text-black">
+          <button
+            onClick={() => router.push("../../")}
+            className="absolute top-4 right-6 text-2xl text-black hover:text-black"
+          >
             ×
           </button>
 
