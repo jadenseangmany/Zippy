@@ -1,22 +1,34 @@
-const express = require('express');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+// GPT Generated Code
 
-const usersRouter = require('./routes/users');
+require('dotenv').config(); // loads .env file
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
 
 const app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// Middleware
+app.use(cors());
+app.use(express.json()); // enables JSON body parsing
 
-app.use('/users', usersRouter);
+// Routes
+const courseRoutes = require('./routes/courses');
+const assignmentRoutes = require('./routes/assignments');
 
-dotenv.config();
+app.use('/api/courses', courseRoutes);       // e.g., /api/courses
+app.use('/api/assignments', assignmentRoutes); // e.g., /api/assignments
 
-mongoose.connect(process.env.DB_URL).then(() => {
-  console.log('Connected to MongoDB database');
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('✅ Connected to MongoDB Atlas');
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`🚀 Server is running on port ${PORT}`));
+})
+.catch(err => {
+  console.error('❌ MongoDB connection error:', err.message);
 });
-
-module.exports = app;
