@@ -5,6 +5,7 @@ import Sidebar from "./custom/Sidebar";
 import DashboardHeader from "./custom/DashboardHeader";
 import CourseList from "./custom/CourseList";
 import PhysicsPage from "./custom/PhysicsPage";
+import BiologyPage from "./custom/BiologyPage";
 
 export default function Home() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -23,6 +24,10 @@ export default function Home() {
 
         {selectedCourse === "AP Physics A" && (
           <PhysicsPage onBack={() => setSelectedCourse(null)} />
+        )}
+
+        {selectedCourse === "AP Biology" && (
+          <BiologyPage onBack={() => setSelectedCourse(null)} />
         )}
       </div>
     </div>
