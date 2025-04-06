@@ -6,11 +6,12 @@ export default function DashboardHeader() {
 
   return (
     <>
-      <div className="bg-white p-6 rounded-2xl shadow-md mb-6 flex justify-between items-stretch gap-4">
-        {/* Left: Name + Table */}
+    <div className="px-4 lg:px-16 pt-0 mt-0"> {/* 👈 Added padding container */}
+    <div className="bg-white pt-20 px-6 pb-6 rounded-2xl shadow-md mb-6 -mt-4 flex justify-between items-stretch gap-4">
+    {/* Left: Name + Table */}
         <div className="bg-blue-50 p-6 rounded-xl flex-1">
           <h1 className="text-black text-3xl font-bold mb-4">Hi, Jaden!</h1>
-          <div className="bg-white rounded-lg p-4 shadow">
+          <div className="bg-white rounded-lg p-4 shadow mt-0">
             <table className="table-auto text-left text-sm w-full">
               <thead>
                 <tr className="text-black">
@@ -88,6 +89,7 @@ export default function DashboardHeader() {
           </ul>
         </div>
       </div>
+    </div>
 
       {/* Modal */}
       {isOpen && (
