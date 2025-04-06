@@ -7,6 +7,7 @@ import CourseList from "./custom/CourseList";
 import PhysicsPage from "./custom/PhysicsPage";
 import PrecalcPage from "./custom/PreCalcPage";
 import EnglishPage from "./custom/EnglishPage";
+import BiologyPage from "./custom/BiologyPage";
 
 export default function Home() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -33,6 +34,10 @@ export default function Home() {
 
         {selectedCourse === "Pre-Calculus" && (
           <PrecalcPage onBack={() => setSelectedCourse(null)} />
+        )}
+
+        {selectedCourse === "AP Biology" && (
+          <BiologyPage onBack={() => setSelectedCourse(null)} />
         )}
       </div>
     </div>
