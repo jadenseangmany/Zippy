@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function HW1ProblemsPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [answer, setAnswer] = useState("");
   const [evaluation, setEvaluation] = useState("");
@@ -37,6 +38,7 @@ export default function HW1ProblemsPage() {
   const handleNext = () => {
     setSubmitted(false);
     setAnswer("");
+    setAnswer("");
     setEvaluation("");
     setCurrentStep((prev) => prev + 1);
   };
@@ -62,12 +64,11 @@ export default function HW1ProblemsPage() {
       try {
         const response = await fetch("http://localhost:3001/api/grade", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             questionText: problems[currentStep].question,
             answerText: answer,
+            studentId: "test123",
             studentId: "test123",
           }),
         });
@@ -109,18 +110,27 @@ export default function HW1ProblemsPage() {
 
   return (
     <div className="min-h-screen bg-white p-6">
-      {/* 🔙 Back to Assignment */}
-      <button
-        onClick={() => router.push("/assignments/physics/hw1")}
-        className="text-blue-500 hover:underline mb-4 text-sm"
-      >
-        ← Back to Assignment
-      </button>
+      {/* 🔙 Header Row with Back + Timer */}
+      <div className="flex items-center justify-between mb-2">
+        <button
+          onClick={() => router.push("/assignments/physics/hw1")}
+          className="text-blue-500 hover:underline text-sm"
+        >
+          ← Back to Assignment
+        </button>
+
+        {!isFinalStep && (
+          <p className="text-sm text-gray-600">
+            ⏱️ Time Elapsed: {formatTime(elapsedTime)}
+          </p>
+        )}
+      </div>
 
       <h2 className="text-2xl font-bold mb-2 text-black">AP Physics HW #1</h2>
       <p className="text-black mb-1">
         {isFinalStep ? "Assignment Complete!" : `Your Progress - ${progress}%`}
       </p>
+
       <div className="h-2 w-full bg-red-200 rounded-full mb-6 overflow-hidden">
         <div
           className="h-full bg-red-500 transition-all"
