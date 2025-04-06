@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 interface PhysicsPageProps {
   onBack: () => void;
@@ -16,10 +17,7 @@ export default function PhysicsPage({ onBack }: PhysicsPageProps) {
       className="bg-white rounded-xl shadow-md p-6 mt-6 mx-4 lg:mx-16"
     >
       {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="text-blue-500 hover:underline mb-4"
-      >
+      <button onClick={onBack} className="text-blue-500 hover:underline mb-4">
         ← Back to Course List
       </button>
 
@@ -50,9 +48,19 @@ export default function PhysicsPage({ onBack }: PhysicsPageProps) {
                   Due {["11:59 PM", "Apr 10", "Apr 17"][i]} · 0% Complete
                 </p>
               </div>
-              <button className="bg-white border border-blue-300 text-blue-500 text-sm px-3 py-1 rounded-md">
-                Start
-              </button>
+
+              {/* HW #1 navigates */}
+              {i === 0 ? (
+                <Link href="/assignments/physics/hw1">
+                  <button className="bg-white border border-blue-300 text-blue-500 text-sm px-3 py-1 rounded-md">
+                    Start
+                  </button>
+                </Link>
+              ) : (
+                <button className="bg-white border border-blue-300 text-blue-500 text-sm px-3 py-1 rounded-md">
+                  Start
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -60,19 +68,19 @@ export default function PhysicsPage({ onBack }: PhysicsPageProps) {
         {/* Leaderboard Section */}
         <div>
           <h3 className="font-semibold text-black mb-2">Leaderboard</h3>
-          <div className="text-black space-y-2">
+          <div className="space-y-2">
             {[
-              { name: "You", score: 94, rank: 5 },
-              { name: "John M.", score: 149, rank: 1 },
-              { name: "Lina G.", score: 120, rank: 2 },
-              { name: "Khang N.", score: 110, rank: 3 },
+              { name: 'You', score: 94, rank: 5 },
+              { name: 'John M.', score: 149, rank: 1 },
+              { name: 'Lina G.', score: 120, rank: 2 },
+              { name: 'Khang N.', score: 110, rank: 3 },
             ].map((entry) => (
               <div
                 key={entry.name}
-                className={`flex justify-between items-center px-4 py-2 rounded-lg ${
-                  entry.name === "You"
-                    ? "border-2 border-red-300 bg-red-50"
-                    : "bg-red-100"
+                className={`flex justify-between items-center px-4 py-2 rounded-lg text-black ${
+                  entry.name === 'You'
+                    ? 'border-2 border-red-300 bg-red-50'
+                    : 'bg-red-100'
                 }`}
               >
                 <span>{entry.name}</span>
