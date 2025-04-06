@@ -40,20 +40,20 @@ export default function DashboardHeader() {
         {/* Middle: Pet */}
         <div className="bg-blue-50 p-6 rounded-xl flex flex-col items-center justify-center">
           <div className="relative w-32 h-32 mb-4">
-            {/* Bunny */}
+            {/* Bunny base */}
             <img
               src="/petBunny.png"
               alt="Mochi"
               className="absolute top-0 left-0 w-full h-full object-contain"
             />
-            {/* Scarf - adjusted position */}
+            {/* Scarf overlay */}
             <img
               src="/scarf.png"
-                alt="Scarf"
-                style={{ top: "64%", left: "0%" }}
-                className="absolute w-full h-full object-contain pointer-events-none"
-              />
-            {/* Sparkles - adjusted position */}
+              alt="Scarf"
+            
+              className="absolute top-0 left-0 w-full h-full object-contain"
+            />
+            {/* Sparkle overlay */}
             <img
               src="/sparkle.png"
               alt="Sparkles"
@@ -112,10 +112,14 @@ export default function DashboardHeader() {
                 <img
                   src="/scarf.png"
                   alt="Scarf"
-                  style={{ top: "64%", left: "0%" }}
-                  className="absolute w-full h-full object-contain pointer-events-none"
+                 
+                  className="absolute top-0 left-0 w-full h-full object-contain"
                 />
-                
+                <img
+                  src="/sparkle.png"
+                  alt="Sparkles"
+                  className="absolute top-[10%] left-[5%] w-full h-full object-contain pointer-events-none"
+                />
               </div>
               <button className="bg-red-300 text-white px-4 py-2 rounded-lg text-sm font-semibold">
                 Shop/Equip
