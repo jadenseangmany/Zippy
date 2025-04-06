@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface BiologyPageProps {
   onBack: () => void;
@@ -12,14 +13,11 @@ export default function BiologyPage({ onBack }: BiologyPageProps) {
       initial={{ y: 50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 50, opacity: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className="bg-white rounded-xl shadow-md p-6 mt-6 mx-4 lg:mx-16"
     >
       {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="text-blue-500 hover:underline mb-4"
-      >
+      <button onClick={onBack} className="text-blue-500 hover:underline mb-4">
         ← Back to Course List
       </button>
 
@@ -39,7 +37,11 @@ export default function BiologyPage({ onBack }: BiologyPageProps) {
         {/* Assignments Section */}
         <div>
           <h3 className="font-semibold text-black mb-2">Assignments</h3>
-          {["HW 1: Cell Structures", "HW 2: Photosynthesis", "HW 3: DNA Replication"].map((hw, i) => (
+          {[
+            "HW 1: Cell Structures",
+            "HW 2: Photosynthesis",
+            "HW 3: DNA Replication",
+          ].map((hw, i) => (
             <div
               key={hw}
               className="flex justify-between items-center bg-green-50 rounded-lg px-4 py-2 mb-2"
@@ -50,9 +52,18 @@ export default function BiologyPage({ onBack }: BiologyPageProps) {
                   Due {["Apr 8", "Apr 12", "Apr 18"][i]} · 0% Complete
                 </p>
               </div>
-              <button className="bg-white border border-green-300 text-green-500 text-sm px-3 py-1 rounded-md">
-                Start
-              </button>
+              {i === 0 ? (
+                // For HW1, wrap the Start button in a Link so it navigates to the HW1 page.
+                <Link href="/assignments/biology/hw1">
+                  <button className="bg-white border border-green-300 text-green-500 text-sm px-3 py-1 rounded-md">
+                    Start
+                  </button>
+                </Link>
+              ) : (
+                <button className="bg-white border border-green-300 text-green-500 text-sm px-3 py-1 rounded-md">
+                  Start
+                </button>
+              )}
             </div>
           ))}
         </div>
