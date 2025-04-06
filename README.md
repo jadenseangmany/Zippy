@@ -1,7 +1,7 @@
 # Zippy
 Diamond Hacks 2025 Project - Jaden Manjusri Khang
 
-### About
+### About:
 Zippy transforms homework from a chore into an exciting, friendly competition. This gamified education platform rewards students for timely assignment completion with points that unlock virtual pet collectibles and customization options. Through real-time leaderboards, instant AI-powered feedback, and a compelling gacha system, Zippy creates a powerful motivation loop that makes learning engaging and rewarding.
 
 ### How to run:
