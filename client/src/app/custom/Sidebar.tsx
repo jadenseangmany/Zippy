@@ -1,4 +1,4 @@
-import { Home, ShoppingCart, Medal } from "lucide-react";
+import { Home, ShoppingCart, Settings } from "lucide-react";
 
 export default function Sidebar({
   onSelectHome,
@@ -11,7 +11,7 @@ export default function Sidebar({
     <div className="w-16 bg-white flex flex-col items-center py-4 shadow-md">
       <SidebarIcon icon={<Home />} onClick={onSelectHome} />
       <SidebarIcon icon={<ShoppingCart />} onClick={onOpenShop} />
-      <SidebarIcon icon={<Medal />} />
+      <SidebarIcon icon={<Settings />} />
     </div>
   );
 }

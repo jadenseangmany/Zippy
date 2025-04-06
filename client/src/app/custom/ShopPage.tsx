@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import ShopCard from "./ShopCardComponent";
 import { useState } from "react"; 
+import ShopItemDetail from './ShopItemPage';
+
 
 const items = [
     {
@@ -81,50 +83,56 @@ const items = [
 
   export default function ShopPage({ onClose }: { onClose?: () => void }) {
     const [filter, setFilter] = useState<"all" | "academic" | "cosmetic">("all");
+    const [selectedItem, setSelectedItem] = useState<typeof items[0] | null>(null);
 
-    return (
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 50, opacity: 0 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="absolute top-0 left-16 w-[calc(100%-4rem)] h-full bg-white shadow-xl z-50"
-      >
-        <div className="p-6 h-full overflow-y-auto">
-  
-          {/* Top Right: Points + Filter Button */}
-          <div className="flex justify-end mb-4">
-          <div className="flex justify-between items-center mb-4 w-full">
-  <div className="bg-[#B7CEDE] text-black font-semibold px-4 py-2 rounded-xl">
-    9,201 points
-  </div>
+
+
+    return selectedItem ? (
+        <ShopItemDetail item={selectedItem} onBack={() => setSelectedItem(null)} />
+      ) : (
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 50, opacity: 0 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="absolute top-0 left-16 w-[calc(100%-4rem)] h-full bg-white shadow-xl z-50"
+        >
+          <div className="p-6 h-full overflow-y-auto">
+            {/* Top bar */}
+            <div className="flex justify-end mb-4">
+              <div className="flex justify-between items-center mb-4 w-full">
+                <div className="bg-[#B7CEDE] text-black font-semibold px-4 py-2 rounded-xl">
+                  9,201 points
+                </div>
                 <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value as "all" | "academic" | "cosmetic")}
-            className="ml-2 bg-[#B7CEDE] text-black font-semibold px-3 py-2 rounded-xl hover:bg-[#A5BFCF] focus:outline-none"
-            >
-            <option value="all">Show All</option>
-            <option value="academic">Show Academic</option>
-            <option value="cosmetic">Show Cosmetic</option>
-            </select>
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value as "all" | "academic" | "cosmetic")}
+                  className="ml-2 bg-[#B7CEDE] text-black font-semibold px-3 py-2 rounded-xl hover:bg-[#A5BFCF] focus:outline-none"
+                >
+                  <option value="all">Show All</option>
+                  <option value="academic">Show Academic</option>
+                  <option value="cosmetic">Show Cosmetic</option>
+                </select>
+              </div>
             </div>
+      
+            {/* Shop grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {items
+                .filter((item) => filter === "all" || item.category === filter)
+                .map((item) => (
+                  <ShopCard
+                    key={item.id}
+                    name={item.name}
+                    points={item.points}
+                    description={item.description}
+                    imageSrc={item.imageSrc}
+                    imageClass={item.imageClass}
+                    onClick={() => setSelectedItem(item)} // ← this is what triggers detail view
+                  />
+                ))}
             </div>
-          {/* Shop Items */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {items
-  .filter((item) => filter === "all" || item.category === filter)
-  .map((item) => (
-              <ShopCard
-                key={item.id}
-                name={item.name}
-                points={item.points}
-                description={item.description}
-                imageSrc={item.imageSrc}
-                imageClass={item.imageClass}
-              />
-            ))}
           </div>
-        </div>
-      </motion.div>
-    );
-  }
+        </motion.div>
+);
+}

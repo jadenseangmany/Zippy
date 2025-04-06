@@ -4,15 +4,20 @@ export default function ShopCard({
     description,
     imageSrc,
     imageClass = "",
+    onClick
   }: {
     name: string;
     points: number;
     description: string;
     imageSrc: string;
     imageClass?: string;
+    onClick?: () => void;
   }) {
     return (
-      <div className="relative rounded-xl shadow-md overflow-hidden bg-white border border-[#B7CEDE]">
+      <div
+        onClick={onClick}
+        className="relative rounded-xl shadow-md overflow-hidden bg-white border border-[#B7CEDE] cursor-pointer hover:scale-[1.01] transition"
+      >
         {/* Points Badge in top-right */}
         <div
           className="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-semibold text-black"
