@@ -60,7 +60,7 @@ export default function PhysicsPage({ onBack }: PhysicsPageProps) {
         {/* Leaderboard Section */}
         <div>
           <h3 className="font-semibold text-black mb-2">Leaderboard</h3>
-          <div className="space-y-2">
+          <div className="text-black space-y-2">
             {[
               { name: "You", score: 94, rank: 5 },
               { name: "John M.", score: 149, rank: 1 },
