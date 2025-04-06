@@ -8,37 +8,50 @@ import PhysicsPage from "./custom/PhysicsPage";
 import PrecalcPage from "./custom/PreCalcPage";
 import EnglishPage from "./custom/EnglishPage";
 import BiologyPage from "./custom/BiologyPage";
+import ShopPage from "./custom/ShopPage";
 
 export default function Home() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [showShop, setShowShop] = useState(false);
+  
 
-  console.log("Selected course:", selectedCourse); // ✅ This goes inside the component
+  const handleGoHome = () => {
+    setSelectedCourse(null);
+    setShowShop(false);
+  };
 
   return (
     <div className="flex h-screen bg-[#e2ecf4]">
-      <Sidebar />
-<div className="flex-1 pt-0 px-6 pb-6 overflow-y-auto">
-        <DashboardHeader />
+      <Sidebar
+        onSelectHome={handleGoHome}
+        onOpenShop={() => {
+          setShowShop(true);
+          setSelectedCourse(null);
+        }}
+      />
 
-        {selectedCourse === null && (
-          <CourseList onSelectCourse={setSelectedCourse} />
-        )}
+        <div className="flex-1 pt-0 px-6 pb-6 overflow-y-auto">
+          {!showShop && <DashboardHeader />}
+
+          {!showShop && selectedCourse === null && (
+            <CourseList onSelectCourse={setSelectedCourse} />
+          )}
 
         {selectedCourse === "AP Physics A" && (
-          <PhysicsPage onBack={() => setSelectedCourse(null)} />
-          
+          <PhysicsPage onBack={handleGoHome} />
         )}
         {selectedCourse === "English 3-4" && (
-          <EnglishPage onBack={() => setSelectedCourse(null)} />
+          <EnglishPage onBack={handleGoHome} />
         )}
-
         {selectedCourse === "Pre-Calculus" && (
-          <PrecalcPage onBack={() => setSelectedCourse(null)} />
+          <PrecalcPage onBack={handleGoHome} />
+        )}
+        {selectedCourse === "AP Biology" && (
+          <BiologyPage onBack={handleGoHome} />
         )}
 
-        {selectedCourse === "AP Biology" && (
-          <BiologyPage onBack={() => setSelectedCourse(null)} />
-        )}
+      {showShop && <ShopPage onClose={handleGoHome} />}
+
       </div>
     </div>
   );
