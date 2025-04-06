@@ -1,58 +1,41 @@
-'use client';
+// src/app/page.tsx
+"use client";
 
-import { useState } from "react";
-import Sidebar from "./custom/Sidebar";
-import DashboardHeader from "./custom/DashboardHeader";
-import CourseList from "./custom/CourseList";
-import PhysicsPage from "./custom/PhysicsPage";
-import PrecalcPage from "./custom/PreCalcPage";
-import EnglishPage from "./custom/EnglishPage";
-import BiologyPage from "./custom/BiologyPage";
-import ShopPage from "./custom/ShopPage";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
 
 export default function Home() {
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
-  const [showShop, setShowShop] = useState(false);
-  
+  const { user, isLoading, error } = useUser();
 
-  const handleGoHome = () => {
-    setSelectedCourse(null);
-    setShowShop(false);
-  };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="flex h-screen bg-[#e2ecf4]">
-      <Sidebar
-        onSelectHome={handleGoHome}
-        onOpenShop={() => {
-          setShowShop(true);
-          setSelectedCourse(null);
-        }}
-      />
-
-        <div className="flex-1 pt-0 px-6 pb-6 overflow-y-auto">
-          {!showShop && <DashboardHeader />}
-
-          {!showShop && selectedCourse === null && (
-            <CourseList onSelectCourse={setSelectedCourse} />
-          )}
-
-        {selectedCourse === "AP Physics A" && (
-          <PhysicsPage onBack={handleGoHome} />
-        )}
-        {selectedCourse === "English 3-4" && (
-          <EnglishPage onBack={handleGoHome} />
-        )}
-        {selectedCourse === "Pre-Calculus" && (
-          <PrecalcPage onBack={handleGoHome} />
-        )}
-        {selectedCourse === "AP Biology" && (
-          <BiologyPage onBack={handleGoHome} />
-        )}
-
-      {showShop && <ShopPage onClose={handleGoHome} />}
-
-      </div>
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      {user ? (
+        <>
+          <h2>Welcome, {user.name}!</h2>
+          <Link href="/dashboard">
+            <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md">
+              Go to Dashboard
+            </button>
+          </Link>
+          <Link href="/api/auth/logout">
+            <button className="mt-2 px-4 py-2 bg-gray-300 text-black rounded-md">
+              Logout
+            </button>
+          </Link>
+        </>
+      ) : (
+        <>
+          <h2>Please log in to continue</h2>
+          <Link href="/api/auth/login?returnTo=/dashboard">
+            <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md">
+              Login
+            </button>
+          </Link>
+        </>
+      )}
     </div>
   );
 }
