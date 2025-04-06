@@ -1,14 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function HW1ProblemsPage() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(0); // 0, 1 = problems, 2 = complete
+  const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [answer, setAnswer] = useState(""); // capture answer input
-  const [evaluation, setEvaluation] = useState(""); // Gemini evaluation text
+  const [answer, setAnswer] = useState("");
+  const [evaluation, setEvaluation] = useState("");
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const problems = [
     {
@@ -24,12 +38,11 @@ export default function HW1ProblemsPage() {
   ];
 
   const isFinalStep = currentStep === problems.length;
-  // 🧠 Calculate progress: 0%, 50%, 100%
   const progress = currentStep === 0 ? 0 : currentStep === 1 ? 50 : 100;
 
   const handleNext = () => {
     setSubmitted(false);
-    setAnswer(""); // clear answer when moving to next problem
+    setAnswer("");
     setEvaluation("");
     setCurrentStep((prev) => prev + 1);
   };
@@ -46,16 +59,13 @@ export default function HW1ProblemsPage() {
   const handleSubmit = async () => {
     if (!submitted) {
       try {
-        // POST to your backend Gemini API endpoint
         const response = await fetch("http://localhost:3001/api/grade", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             questionText: problems[currentStep].question,
             answerText: answer,
-            studentId: "test123", // or your dynamic student id
+            studentId: "test123",
           }),
         });
         const data = await response.json();
@@ -73,18 +83,27 @@ export default function HW1ProblemsPage() {
 
   return (
     <div className="min-h-screen bg-white p-6">
-      {/* 🔙 Back to Assignment */}
-      <button
-        onClick={() => router.push("/assignments/physics/hw1")}
-        className="text-blue-500 hover:underline mb-4 text-sm"
-      >
-        ← Back to Assignment
-      </button>
+      {/* 🔙 Header Row with Back + Timer */}
+      <div className="flex items-center justify-between mb-2">
+        <button
+          onClick={() => router.push("/assignments/physics/hw1")}
+          className="text-blue-500 hover:underline text-sm"
+        >
+          ← Back to Assignment
+        </button>
+
+        {!isFinalStep && (
+          <p className="text-sm text-gray-600">
+            ⏱️ Time Elapsed: {formatTime(elapsedTime)}
+          </p>
+        )}
+      </div>
 
       <h2 className="text-2xl font-bold mb-2 text-black">AP Physics HW #1</h2>
       <p className="text-black mb-1">
         {isFinalStep ? "Assignment Complete!" : `Your Progress - ${progress}%`}
       </p>
+
       <div className="h-2 w-full bg-red-200 rounded-full mb-6 overflow-hidden">
         <div
           className="h-full bg-red-500 transition-all"
@@ -94,7 +113,6 @@ export default function HW1ProblemsPage() {
 
       {!isFinalStep ? (
         <>
-          {/* Problem Box */}
           <div className="bg-[#d4e3ed] rounded-lg p-6 text-black mb-6">
             <p className="text-xl font-bold mb-2">
               Problem {problems[currentStep].number}:
@@ -115,7 +133,6 @@ export default function HW1ProblemsPage() {
             </div>
           )}
 
-          {/* Controls */}
           <div className="flex gap-4 mt-4">
             {currentStep > 0 && (
               <button
@@ -141,7 +158,6 @@ export default function HW1ProblemsPage() {
           </div>
         </>
       ) : (
-        // 🎉 Completion Screen
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-[#d4e3ed] rounded-lg p-6 text-black">
             <p className="font-semibold text-lg mb-2">Great Work!</p>
@@ -177,7 +193,6 @@ export default function HW1ProblemsPage() {
               <span>Rank</span>
             </div>
 
-            {/* Your Entry */}
             <div className="bg-red-50 border-2 border-red-300 rounded-lg px-4 py-2 mb-2 grid grid-cols-3 items-center text-black text-sm">
               <span>You</span>
               <span>47</span>
