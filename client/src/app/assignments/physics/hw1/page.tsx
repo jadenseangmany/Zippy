@@ -68,7 +68,7 @@ export default function HW1Page() {
               {/* Table Headers */}
               <div className="text-sm font-semibold text-black grid grid-cols-3 px-4 mb-1">
                 <span>Name</span>
-                <span>Points</span>
+                <span>Gems</span>
                 <span>Rank</span>
               </div>
 

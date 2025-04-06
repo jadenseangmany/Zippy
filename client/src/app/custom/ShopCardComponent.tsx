@@ -1,3 +1,5 @@
+import { Gem } from "lucide-react";
+
 export default function ShopCard({
   name,
   points,
@@ -20,13 +22,14 @@ export default function ShopCard({
       onClick={onClick}
       className={`relative rounded-xl shadow-md overflow-hidden bg-white border border-[#B7CEDE] transition hover:scale-[1.01] cursor-pointer`}
     >
-      {/* Points Badge */}
-      <div
-        className="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-semibold text-black"
-        style={{ backgroundColor: '#B7CEDE' }}
-      >
-        {points} points
-      </div>
+            {/* Points Badge */}
+            <div
+            className="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-semibold text-black flex items-center gap-1"
+            style={{ backgroundColor: '#B7CEDE' }}
+            >
+            {points}
+            <Gem className="w-4 h-4 text-black" />
+            </div>
 
       {/* Owned Badge */}
       {isPurchased && (

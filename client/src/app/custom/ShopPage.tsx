@@ -1,5 +1,7 @@
 'use client';
 import { Gift } from "lucide-react";
+import { Gem } from "lucide-react";
+
 
 
 import { motion } from "framer-motion";
@@ -115,7 +117,10 @@ const items = [
             <div className="flex justify-between items-center mb-4 w-full">
             {/* Left: Points */}
             <div className="bg-[#B7CEDE] text-black font-semibold px-4 py-2 rounded-xl">
-                9,201 points
+            <div className="flex items-center space-x-1">
+  <span>9,201</span>
+  <Gem className="w-4 h-4 text-black" />
+</div>
             </div>
 
             {/* Center: Gift Button */}

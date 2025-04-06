@@ -1,6 +1,8 @@
 'use client';
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Gem } from "lucide-react";
+
 
 export default function ShopItemDetail({
     item,
@@ -41,7 +43,10 @@ export default function ShopItemDetail({
           className={`max-h-[380px] ${item.imageClass?.replace(/mt-\d+|-mt-\d+/, '')} -mt-6`}
         />
         <h2 className="text-5xl font-extrabold text-[#B7CEDE]">{item.name}</h2>
-        <div className="text-[#5E5E5E] text-2xl font-semibold">{item.points} points</div>
+        <div className="flex items-center text-[#5E5E5E] text-2xl font-semibold gap-1">
+  {item.points}
+  <Gem className="w-5 h-5 text-[#5E5E5E]" />
+</div>
         <p className="max-w-2xl text-lg leading-relaxed text-gray-700">{item.description}</p>
 
         <button

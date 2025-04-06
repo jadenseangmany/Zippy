@@ -1,5 +1,5 @@
 'use client';
-
+import { Gem } from "lucide-react";
 import { useState } from 'react';
 
 export default function DashboardHeader() {
@@ -36,9 +36,12 @@ export default function DashboardHeader() {
 
   return (
     <>
-      <div className="px-4 lg:px-16 pt-0 mt-0">
-        <div className="bg-white pt-20 px-6 pb-6 rounded-2xl shadow-md mb-6 -mt-4 flex justify-between items-stretch gap-4">
-
+<div className="px-4 lg:px-16 pt-0 mt-0 relative">
+<div className="absolute top-9 left-1/2 transform -translate-x-1/2 z-10">
+    <img src="/ZippyIconText.png" alt="Zippy Medal" className="w-40 h-12 " />
+  </div>
+  <div className="bg-white pt-32 px-6 pb-6 rounded-2xl shadow-md mb-6 -mt-4 flex items-stretch gap-6">
+          
           {/* Left: Name + Table + Total */}
           <div className="bg-blue-50 p-6 rounded-xl flex-1 max-w-md">
             <h1 className="text-black text-3xl font-bold mb-4">Hi, Jaden!</h1>
@@ -48,7 +51,7 @@ export default function DashboardHeader() {
                   <thead>
                     <tr className="text-black">
                       <th className="pb-1">Class</th>
-                      <th className="pb-1">Points</th>
+                      <th className="pb-1">Gems</th>
                       <th className="pb-1">Rank</th>
                     </tr>
                   </thead>
@@ -66,16 +69,19 @@ export default function DashboardHeader() {
 
               <div className="w-1/4 flex items-center justify-end pl-2">
                 <div className="text-right text-black text-sm font-semibold">
-                  <p>Total</p>
-                  <p className="text-xl font-bold">{totalPoints}</p>
+                <div className="flex items-center justify-end gap-1">
+                <p className="text-sm font-semibold text-black">Total</p>
+                <Gem className="w-4 h-4 text-[#B7CEDE]" />
+              </div>
+              <p className="text-xl font-bold text-black -ml-7">{totalPoints}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Middle: Pet */}
-          <div className="bg-blue-50 p-6 rounded-xl flex flex-col items-center justify-center">
-            <div className="relative w-32 h-32 mb-4">
+          <div className="bg-blue-50 p-6 rounded-xl w-60 flex flex-col items-center justify-center">
+          <div className="relative w-32 h-32 mb-4">
               <img
                 src={selectedPet.base}
                 alt={selectedPet.name}
@@ -102,7 +108,7 @@ export default function DashboardHeader() {
           </div>
 
           {/* Right: Assignments */}
-          <div className="bg-blue-50 p-6 rounded-xl w-64">
+<div className="bg-blue-50 p-6 rounded-xl flex-1 min-w-[280px]">
             <h3 className="text-black font-bold text-lg mb-4">Upcoming Assignments</h3>
             <ul className="text-black space-y-3">
               {[

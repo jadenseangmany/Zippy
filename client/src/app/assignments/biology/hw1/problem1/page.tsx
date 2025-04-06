@@ -145,8 +145,8 @@ export default function HW1BioProblemsPage() {
           <div className="bg-[#d4f0d9] rounded-lg p-6 text-black">
             <p className="font-semibold text-lg mb-2">Great Work!</p>
             <p>
-              You earned <strong>42 points</strong> and{" "}
-              <strong>5 bonus points</strong>.
+              You earned <strong>42 gems</strong> and{" "}
+              <strong>5 bonus gems</strong>.
             </p>
             <p>
               You took <strong>3.5 hours</strong> to complete the assignment.
@@ -172,7 +172,7 @@ export default function HW1BioProblemsPage() {
 
             <div className="text-sm font-semibold text-black grid grid-cols-3 px-4 mb-1">
               <span>Name</span>
-              <span>Points</span>
+              <span>Gems</span>
               <span>Rank</span>
             </div>
 

@@ -1,5 +1,6 @@
 'use client';
 import { X } from "lucide-react";
+import { Gem } from "lucide-react";
 
 
 import { useState } from "react";
@@ -109,7 +110,11 @@ export default function GachaPage({ onBack }: { onBack: () => void }) {
         className="bg-[#B7CEDE] text-black font-semibold px-6 py-3 rounded-full hover:bg-[#A5BFCF] transition text-lg flex items-center gap-2"
       >
         <Sparkles className="w-5 h-5" />
-        {isRolling ? "Summoning..." : "2000 Points to Summon a Pet"}
+        {isRolling ? "Summoning..." : (
+  <span className="flex items-center gap-1">
+    2000 <Gem className="w-4 h-4 text-black" /> to Summon a Pet
+  </span>
+)}
       </button>
 
       {result && (
