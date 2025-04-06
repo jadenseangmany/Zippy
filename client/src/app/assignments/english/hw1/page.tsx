@@ -6,13 +6,20 @@ import { useRouter } from "next/navigation";
 
 export default function HW1EnglishPage() {
   const router = useRouter();
-  return (
-    <div className="flex h-screen bg-[#e2ecf4]">
-      {/* Sidebar */}
-      <Sidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto">
+  return (
+    <div className="h-screen bg-[#e2ecf4] flex">
+      {/* Sidebar */}
+      <div className="z-50 fixed top-0 left-0 h-full">
+        <Sidebar
+          onSelectHome={() => router.push("/")}
+          onOpenShop={() => router.push("/shop")}
+          onOpenGacha={() => router.push("/gacha")}
+        />
+      </div>
+
+      {/* Push main content right to make room for sidebar */}
+      <div className="ml-16 flex-1 p-6 overflow-auto">
         <div className="bg-white rounded-xl shadow-md p-6 h-full relative">
           {/* Close Button */}
           <button

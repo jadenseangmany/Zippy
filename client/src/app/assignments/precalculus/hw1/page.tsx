@@ -10,10 +10,16 @@ export default function HW1PrecalcPage() {
   return (
     <div className="flex h-screen bg-[#e2ecf4]">
       {/* Sidebar */}
-      <Sidebar />
+      <div className="z-50 fixed top-0 left-0 h-full">
+        <Sidebar
+          onSelectHome={() => router.push("/")}
+          onOpenShop={() => router.push("/shop")}
+          onOpenGacha={() => router.push("/gacha")}
+        />
+      </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="ml-16 flex-1 p-6 overflow-auto">
         <div className="bg-white rounded-xl shadow-md p-6 h-full relative">
           {/* Close Button */}
           <button
@@ -25,9 +31,7 @@ export default function HW1PrecalcPage() {
 
           {/* Header */}
           <div className="mb-6">
-            <h2 className="text-xl font-bold text-black">
-              Course: Pre-Calculus
-            </h2>
+            <h2 className="text-xl font-bold text-black">Course: Pre-Calculus</h2>
             <h3 className="text-lg font-semibold text-black">
               Pre-Calculus HW #1
             </h3>
