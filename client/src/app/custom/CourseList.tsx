@@ -1,11 +1,15 @@
+interface CourseListProps {
+  onSelectCourse: (course: string) => void;
+}
+
 const courses = [
-  { name: "AP Physics A", image: "assets/physicPhoto.png" },
+  { name: "AP Physics A", image: "/assets/physicPhoto.png" },
   { name: "AP Biology", image: "/assets/biologyPhoto.png" },
   { name: "English 3-4", image: "/assets/englishPhoto.png" },
   { name: "Pre-Calculus", image: "/assets/calcPhoto.png" },
 ];
 
-export default function CourseList() {
+export default function CourseList({ onSelectCourse }: CourseListProps) {
   return (
     <div className="px-4 lg:px-16">
       <h2 className="text-2xl font-bold mb-6 text-black">Course List</h2>
@@ -14,6 +18,7 @@ export default function CourseList() {
           <div
             key={course.name}
             className="rounded-xl overflow-hidden shadow-md bg-white transition cursor-pointer hover:scale-105"
+            onClick={() => onSelectCourse(course.name)} // ✅ This sets selectedCourse
           >
             <img
               src={course.image}
