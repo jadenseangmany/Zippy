@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface PrecalcPageProps {
   onBack: () => void;
@@ -12,7 +13,7 @@ export default function PrecalcPage({ onBack }: PrecalcPageProps) {
       initial={{ y: 50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 50, opacity: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className="bg-white rounded-xl shadow-md p-6 mt-6 mx-4 lg:mx-16"
     >
       <button onClick={onBack} className="text-blue-500 hover:underline mb-4">
@@ -39,12 +40,21 @@ export default function PrecalcPage({ onBack }: PrecalcPageProps) {
               <div>
                 <p className="font-medium text-black">{hw}</p>
                 <p className="text-xs text-gray-600">
-                  Due {['Apr 6', 'Apr 13', 'Apr 18'][i]} · {['30%', '50%', '40%'][i]} Complete
+                  Due {["Apr 6", "Apr 13", "Apr 18"][i]} ·{" "}
+                  {["30%", "50%", "40%"][i]} Complete
                 </p>
               </div>
-              <button className="bg-white border border-green-300 text-green-500 text-sm px-3 py-1 rounded-md">
-                Start
-              </button>
+              {i === 0 ? (
+                <Link href="/assignments/precalculus/hw1">
+                  <button className="bg-white border border-green-300 text-green-500 text-sm px-3 py-1 rounded-md">
+                    Start
+                  </button>
+                </Link>
+              ) : (
+                <button className="bg-white border border-green-300 text-green-500 text-sm px-3 py-1 rounded-md">
+                  Start
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -52,10 +62,18 @@ export default function PrecalcPage({ onBack }: PrecalcPageProps) {
         <div>
           <h3 className="font-semibold text-black mb-2">Leaderboard</h3>
           <div className="text-black space-y-2">
-            {[{ name: "You", score: 63, rank: 8 }, { name: "Daniel S.", score: 130, rank: 1 }, { name: "Maya B.", score: 120, rank: 2 }].map(entry => (
+            {[
+              { name: "You", score: 63, rank: 8 },
+              { name: "Daniel S.", score: 130, rank: 1 },
+              { name: "Maya B.", score: 120, rank: 2 },
+            ].map((entry) => (
               <div
                 key={entry.name}
-                className={`flex justify-between items-center px-4 py-2 rounded-lg ${entry.name === "You" ? "border-2 border-green-300 bg-green-50" : "bg-green-100"}`}
+                className={`flex justify-between items-center px-4 py-2 rounded-lg ${
+                  entry.name === "You"
+                    ? "border-2 border-green-300 bg-green-50"
+                    : "bg-green-100"
+                }`}
               >
                 <span>{entry.name}</span>
                 <span>{entry.score}</span>
