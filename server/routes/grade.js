@@ -26,7 +26,7 @@ module.exports = (io) => {
     const answerImage = files['answerImage'] ? files['answerImage'][0] : undefined;
 
     // Build a simple prompt string.
-    let prompt = `Question: ${questionText}\nAnswer: ${answerText}\nGrade the answer from 0 to 10 and provide a short explanation.`;
+    let prompt = `Question: ${questionText}\nAnswer: ${answerText}\nGrade the answer from F to A and provide a short explanation. F Would be they did not put any effort or the answer didn't make any sense, while A is a perfect answer that answers the question properly.`;
 
     // (Optionally) Append image info if available.
     if (questionImage) {

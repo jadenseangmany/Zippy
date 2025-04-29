@@ -15,7 +15,7 @@ export default function HW1ProblemsPage() {
   const problems = [
     {
       question:
-        "A hockey puck is sliding across a very smooth, frictionless ice rink at a constant velocity of 5 m/s to the east. What is the net force acting on the puck? Upload your written steps.",
+        "A hockey puck is sliding across a very smooth, frictionless ice rink at a constant velocity of 5 m/s to the east. What is the net force acting on the puck? Write down a numeric answer",
       number: 1,
     },
     {
@@ -83,7 +83,7 @@ export default function HW1ProblemsPage() {
           );
         } else {
           const maxPoints = 100;
-          const decayRate = 3;
+          const decayRate = 0.5;
           const earned = Math.max(
             0,
             Math.round(maxPoints - decayRate * timeTaken)
@@ -91,7 +91,7 @@ export default function HW1ProblemsPage() {
           setScore((prev) => prev + earned);
 
           setEvaluation(
-            `✅ Correct! You earned ${earned} points in ${timeTaken.toFixed(
+            `Correct! You earned ${earned} points in ${timeTaken.toFixed(
               1
             )}s.\n\nGemini says: ${evaluationText}`
           );
